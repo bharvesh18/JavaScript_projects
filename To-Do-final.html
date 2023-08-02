@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/1d466d31a4.js" crossorigin="anonymous"></script>
+    <title>To Do</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .addlist {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .additem {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .inputs {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .right {
+            flex: 0 0 40px;
+            text-align: center;
+        }
+
+        .addimage {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .addimage:focus {
+            outline: none;
+        }
+
+        .showitems {
+            margin-top: 20px;
+        }
+
+        .task {
+            margin-bottom: 5px;
+        }
+
+        .task input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .delete {
+            color: #f44336;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .delete:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h2>To Do App</h2></div>
+        <div class="addlist">
+            <div><h2>Add a Task</h2></div>
+        </div>
+        <div class="additem">
+            <div class="inputs">
+                <label for="work">Task:</label>
+                <input type="text" id="work">
+            </div>
+            <div class="right">
+                <button class="addimage" type="button" id="addb"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+        <h2>Tasks To Do</h2>
+        <div class="showitems" id="taskList">
+        </div>
+    </div>
+
+    <script>
+        function createList() {
+            let addButton = document.getElementById('addb');
+            addButton.addEventListener('click', () => {
+                let key = generateKey();
+                let answer = document.getElementById('work');
+                let task = answer.value.trim();
+
+                if (task !== '') {
+                    localStorage.setItem(key, task);
+                    answer.value = '';
+                    showList(key, task);
+                } else {
+                    alert('Task cannot be empty.');
+                }
+            });
+        }
+
+        function generateKey() {
+            let timestamp = new Date().getTime();
+            return 'task_' + timestamp;
+        }
+
+        function showList(key, task) {
+            let taskContainer = document.getElementById('taskList');
+            let divElement = document.createElement('div');
+            divElement.setAttribute('class', 'task');
+            let field = document.createElement('input');
+            field.setAttribute('type', 'text');
+            field.value = task;
+            field.setAttribute('data-key', key);
+            field.addEventListener('input', updateTask);
+            let delIcon = document.createElement('i');
+            delIcon.setAttribute('class', 'fa-solid fa-trash delete');
+            delIcon.addEventListener('click', deleteTask);
+            divElement.appendChild(field);
+            divElement.appendChild(delIcon);
+            let brake = document.createElement('br');
+            divElement.appendChild(brake);
+            taskContainer.appendChild(divElement);
+        }
+
+        function updateTask(event) {
+            let key = event.target.getAttribute('data-key');
+            localStorage.setItem(key, event.target.value);
+        }
+
+        function deleteTask(event) {
+            let taskContainer = document.getElementById('taskList');
+            let taskDiv = event.target.parentElement;
+            let key = taskDiv.querySelector('input').getAttribute('data-key');
+            localStorage.removeItem(key);
+            taskContainer.removeChild(taskDiv);
+        }
+
+        function populateTasks() {
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let task = localStorage.getItem(key);
+                showList(key, task);
+            }
+        }
+
+        createList();
+        populateTasks();
+    </script>
+</body>
+</html>

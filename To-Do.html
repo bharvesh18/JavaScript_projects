@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/1d466d31a4.js" crossorigin="anonymous"></script>
+    <title>To Do</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h2>To Do App</h2></div>
+        <div class="addlist">
+            <div><h2>Add a Task</h2></div>
+        </div>
+        <div class="additem">
+            <div class="inputs left" style="justify-content: space-evenly; align-items: center; display: flex; flex-direction: row;">
+                <label for="work">Task:</label>
+                <input type="text" id="work" style="width: 400px;"><br>
+                <label for="deadline">
+                    Deadline:
+                </label>
+                <input type="date" id="deadline">
+            </div>
+            <div class="right">
+                <button class="addimage" type="button" id="addb"><i class="fa-solid fa-plus"></i></button>
+            </div>
+        </div>
+        <h2>Tasks To Do</h3>
+        <div class="showitems">
+            <div class="task">
+            </div>
+        </div>
+    </div>
+    <script>
+        function createList(){
+            let response=document.getElementById('addb')
+            response.addEventListener('click',()=>{
+                let key=generateKey();
+                let divElement=document.createElement('div');
+                divElement.setAttribute('class','list')
+                let answer=document.getElementById('work');
+                if(answer.value==''){
+                    alert('Please add a task')
+                }
+                else{
+                    localStorage.setItem(key,answer.value);
+                    answer.value='';
+                    showList(key);
+                }
+            })
+        }
+        createList()
+        function showList(k){
+            var taskn=localStorage.getItem(`${k}`)
+            let dest=document.querySelector('.task')
+            let field=document.createElement('input')
+            field.setAttribute('type','text')
+            field.value=taskn
+            var delicon=document.createElement('i')
+            delicon.setAttribute('class','fa-solid fa-trash delete')
+            delicon.setAttribute('id',`${k}`)
+            var delval=delicon.getAttribute('id')
+            delicon.addEventListener('click',function(){deleteTask(delval)})
+            dest.appendChild(field)
+            dest.appendChild(delicon)
+            let brake=document.createElement('br')
+            dest.appendChild(brake)
+        }
+        function generateKey() {
+            let timestamp = new Date().getTime();
+            return 'task_' + timestamp;
+        }
+        function populateTasks() {
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                showList(key);
+            }
+        }
+        function deleteTask(value){
+            if(value){
+                const subdiv=document.getElementById(value);
+                const parentDiv=subdiv.parentNode;
+                const inputElement = parentDiv.querySelector('input[type="text"]');
+                localStorage.removeItem(value)
+                parentDiv.removeChild(inputElement)
+                parentDiv.removeChild(subdiv)
+            }
+        }
+        populateTasks();
+    </script>
+</body>
+</html>

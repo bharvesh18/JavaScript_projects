@@ -1,0 +1,68 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@500&family=Roboto:ital,wght@1,300&display=swap');body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container{
+    width: 650px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.header{
+    background-color: midnightblue;
+    color: white;
+    font-family: 'Roboto',sans-serif;
+}
+.addlist{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.addimage{
+    border: 2px solid black;
+    border-radius: 50%;
+    border-width: 10px;
+}
+.inputs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inputs input[type='text']{
+    size: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    display: flex;
+}
+.additem{
+    display: flex;
+    gap: 20px;
+}
+.showitems{
+    display: flex;
+    align-items: center;
+}
+.showitems input{
+    box-shadow: 4px 4px 4px rgba(101, 67, 33, 0.5);
+    width: auto;
+}
+.delete{
+    margin-left: 20px;
+    height: 20px;
+}
+.showitems i{
+    cursor: crosshair;
+}
+.task input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}

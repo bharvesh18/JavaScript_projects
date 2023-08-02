@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock 2</title>
+    <style>
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content: center;/*Most suitable way to center a div*/
+        min-height: 100vh;/*Used to center the whole viewport*/
+    }
+    .clock{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 5px solid yellow;
+        border-radius: 30px;
+        padding: 30px;
+        outline-style: dashed;
+        outline-width: 3px;
+        outline-color: cyan;
+    }
+    button{
+        border: 2px;
+        background-color: tomato;
+        border-color: red;
+        color: white;
+        margin-left: 20px;
+        margin-right: 16px;
+        padding: 12px 15px;
+        font-size: 25px;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body style="background-color: black;">
+    <div class="container">
+    <div class="clock">
+        <button id="hour" style="background-color: turquoise;"></button>
+        <button>:</button>
+        <button id="min" style="background-color: lightgreen;"></button>
+        <button>:</button>
+        <button id="sec" style="background-color: lightpink;"></button>
+        <button id="ap"></button>
+    </div>
+    </div>
+    <script>
+        setInterval(timeshow,1000);
+        function timeshow(){
+            dur="AM"
+            let h=document.getElementById('hour');
+            let d=new Date();//Used to get the date
+            hour=d.getHours();
+            if(hour>12){
+                hour=hour-12;
+                document.getElementById('ap').innerHTML="PM"
+            }
+            else{
+                hour=hour
+                document.getElementById('ap').innerHTML="AM"
+            }
+            h.innerHTML=hour;
+            document.getElementById('min').innerHTML=d.getMinutes();
+            document.getElementById('sec').innerHTML=d.getSeconds();
+        }
+        timeshow();
+    </script>
+</body>
+</html>
